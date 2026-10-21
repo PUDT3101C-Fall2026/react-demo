@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-let books = [
+let initialBooks = [
   { title: "Crafting Interpreters", author: "Robert Nystrom" },
   { title: "How to Bake Pi", author: "Eugenia Cheng" },
   {
@@ -13,15 +13,41 @@ let books = [
 
 // This is our Library component which is exported for use in main.jsx
 export function Library() {
+  let [books, setBooks] = useState(initialBooks);
+
   return (
     <section>
       <h1>My Library</h1>
-      <ul>
+      <NewBook
+        onCreated={(book) => {
+          setBooks([...books, book]);
+        }}
+      />
+      <ul className="books">
         {books.map((book) => (
           <Book key={book.title} title={book.title} author={book.author} />
         ))}
       </ul>
     </section>
+  );
+}
+
+function NewBook(props) {
+  // State field for the title being entered
+  let [title, setTitle] = useState("");
+
+  function submit() {
+    setTitle("");
+    props.onCreated({ title: title, author: "" });
+  }
+
+  return (
+    <div className="new-book">
+      <input value={title} onInput={(event) => setTitle(event.target.value)} />
+      <button onClick={submit} disabled={title == ""}>
+        +
+      </button>
+    </div>
   );
 }
 
@@ -31,7 +57,7 @@ function Book(props) {
   return (
     <li>
       {props.title}{" "}
-      <button onClick={() => setShown(!shown)}>
+      {/* <button onClick={() => setShown(!shown)}>
         {shown ? "Hide" : "Show"}
       </button>
       {shown ? (
@@ -40,7 +66,7 @@ function Book(props) {
         </ul>
       ) : (
         ""
-      )}
+      )} */}
     </li>
   );
 }
