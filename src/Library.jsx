@@ -51,7 +51,7 @@ function NewBook(props) {
   function submit() {
     setTitle("");
     setColor("#302828");
-    props.onCreated({ title: title, author: "", color: color });
+    props.onCreated({ title, author: "", color });
   }
 
   return (
@@ -69,22 +69,6 @@ function NewBook(props) {
   );
 }
 
-function Book(props) {
-  let [shown, setShown] = useState(false);
-
-  return (
-    <li style={{ background: props.color }}>
-      {props.title}{" "}
-      {/* <button onClick={() => setShown(!shown)}>
-        {shown ? "Hide" : "Show"}
-      </button>
-      {shown ? (
-        <ul>
-          <li>{props.author}</li>
-        </ul>
-      ) : (
-        ""
-      )} */}
-    </li>
-  );
+function Book({ color, title }) {
+  return <li style={{ background: color }}>{title} </li>;
 }
