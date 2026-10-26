@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import { useSortable } from "@dnd-kit/react/sortable";
+
 let initialBooks = [
   { title: "Crafting Interpreters", author: "Robert Nystrom", color: "blue" },
   { title: "How to Bake Pi", author: "Eugenia Cheng", color: "orange" },
@@ -29,8 +31,10 @@ export function Library() {
         }}
       />
       <ul className="books">
-        {books.map((book) => (
+        {books.map((book, i) => (
           <Book
+            id={book.title}
+            index={i}
             key={book.title}
             color={book.color}
             title={book.title}
@@ -69,6 +73,17 @@ function NewBook(props) {
   );
 }
 
-function Book({ color, title }) {
-  return <li style={{ background: color }}>{title} </li>;
+/*
+Props for Sortable behavior:
+- id: Unique to the book (title)
+- index: Position in the list for the book (0, 1, 2...)
+*/
+function Book({ id, index, color, title }) {
+  let { ref } = useSortable({ id, index });
+
+  return (
+    <li ref={ref} style={{ background: color }}>
+      {title}{" "}
+    </li>
+  );
 }
