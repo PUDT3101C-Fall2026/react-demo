@@ -20,7 +20,13 @@ npm run dev
 
 Feel free to download the entire repository and follow along or play with the code. However, if you want to copy individual files into your own project, the following are the most useful:
 
-* `.gitignore`: This file prevents GitHub from archiving files we don't want to save (like the node_modules folder)
-* `package.json`: This lists the packages that `npm install` knows to install
+- `.gitignore`: This file prevents GitHub from archiving files we don't want to save (like the node_modules folder)
+- `package.json`: This lists the packages that `npm install` knows to install
 
 And, of course, the site itself is stored in `index.html` as well as all of the files in the `src` folder.
+
+## Publishing to GitHub Pages
+
+**In addition**, this project requires a more complex setup for publishing on GitHub pages. You'll need to create a folder in your project called `.github/workflows` and copy the [`deploy.yaml`](https://github.com/PUDT3101C-Fall2026/react-demo/blob/main/.github/workflows/deploy.yaml) file into this folder in your project. Commit this file to your repository.
+
+Then, in the settings for your repository, go to the **Pages** section and under **Source**, select **GitHub Actions**. Now, the action should run and deploy your page to GitHub pages. If there's an issue, you can look under the **Actions** section of your repository.
