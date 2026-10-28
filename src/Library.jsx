@@ -1,6 +1,8 @@
 // This hook is necessary for our components to have an internal sense of state
 import { useState } from "react";
 
+import { useEffect } from "react";
+
 import { useSortable } from "@dnd-kit/react/sortable";
 
 let initialBooks = [
@@ -19,10 +21,28 @@ let initialBooks = [
   },
 ];
 
+let initialLibrary = localStorage.getItem("library");
+
+if (initialLibrary != null) {
+  initialLibrary = JSON.parse(initialLibrary);
+} else {
+  initialLibrary = initialBooks;
+}
+
 // This is our Library component which is exported for use in main.jsx
 export function Library() {
   // This state field holds the set of books in our library
-  let [books, setBooks] = useState(initialBooks);
+  let [books, setBooks] = useState(initialLibrary);
+
+  // This works, but is not the best approach, because it might cause
+  // bugs if this function had side effects
+  // localStorage.setItem("library", JSON.stringify(books));
+
+  // However, it's better for code that does things like sounds, animations,
+  // connections to the internet, etc to be wrapped in this useEffect() function
+  useEffect(() => {
+    localStorage.setItem("library", JSON.stringify(books));
+  }, [books]);
 
   return (
     <section>
